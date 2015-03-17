@@ -3,7 +3,7 @@
 
 
 ofxTouchGUIButton::ofxTouchGUIButton(){
-    
+
     // DEFAULT BUTTON BACKGROUND CLRS: GRADIENT DARKER GRAY 75%
     // creates a darker fade from top to bottom instead of left to right
     bgClrTL = ofColor(140,140,140,255); //rgba
@@ -15,15 +15,15 @@ ofxTouchGUIButton::ofxTouchGUIButton(){
 }
 
 ofxTouchGUIButton::~ofxTouchGUIButton(){
-	
+
 }
 
 
 void ofxTouchGUIButton::loadImageStates(string upImagePath, string downImagePath, bool useWidthHeightFromImage) {
-    
+
     hasImages = true;
-    upImage.load(upImagePath);
-    downImage.load(downImagePath); 
+    upImage.loadImage(upImagePath);
+    downImage.loadImage(downImagePath);
     if(useWidthHeightFromImage) {
         this->width = upImage.width;
         this->height = upImage.height;
@@ -31,7 +31,7 @@ void ofxTouchGUIButton::loadImageStates(string upImagePath, string downImagePath
 }
 
 void ofxTouchGUIButton::setImageStates(ofImage& upImage, ofImage& downImage, bool useWidthHeightFromImage) {
-    
+
     hasImages = true;
     this->upImage = upImage;
     this->downImage = downImage;
@@ -43,23 +43,23 @@ void ofxTouchGUIButton::setImageStates(ofImage& upImage, ofImage& downImage, boo
 
 //--------------------------------------------------------------
 void ofxTouchGUIButton::draw(){
-    
+
     if(!hidden) {
         ofPushMatrix();
         ofTranslate(int(posX), int(posY));
-        
+
         if(hasImages) {
-            
+
             ofPushStyle();
             ofSetColor(255);
             if(isPressed) {
                 downImage.draw(0,0);
             }
-            else {                
+            else {
                 upImage.draw(0,0);
             }
             ofPopStyle();
-            
+
         } else {
             // draw the background rectangle
             if(isPressed) {
@@ -68,15 +68,15 @@ void ofxTouchGUIButton::draw(){
             else {
                 drawGLRect(vertexArr, colorsArr);
             }
-            
+
             // draw text
             ofPushStyle();
             ofSetColor(textColour);
             drawText(label, 1);
             ofPopStyle();
         }
-        
-        
+
+
         ofPopMatrix();
     }
 }
@@ -85,18 +85,18 @@ void ofxTouchGUIButton::draw(){
 
 
 bool ofxTouchGUIButton::onUp(float x, float y, int pId){
-    
+
     if(ofxTouchGUIBase::onUp(x,y, pId)) {
         doButtonAction();
         return true;
     }
-    
-    return false;    
+
+    return false;
 }
 
 // doOSC must = false when called from the osc receiver, otherwise it gets stuck in an infinite loop
 void ofxTouchGUIButton::doButtonAction(bool doOSC) {
-    
+
     //ofNotifyEvent(onChangedEvent,label,this);
     ofxTouchGUIEventArgs args(this);
     ofNotifyEvent(onChangedEvent, args);
@@ -104,7 +104,7 @@ void ofxTouchGUIButton::doButtonAction(bool doOSC) {
 }
 
 bool ofxTouchGUIButton::getValue() {
-    
+
     return isPressed;
 }
 
@@ -115,7 +115,7 @@ bool ofxTouchGUIButton::getValue() {
  static void ofAddListener(EventType & event, ListenerClass  * listener, void (ListenerClass::*listenerMethod)(const void*, ArgumentsType&)){
  event += Poco::delegate(listener, listenerMethod);
  }
- 
+
  */
 
 
